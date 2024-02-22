@@ -1,0 +1,32 @@
+from datetime import datetime,timedelta
+cd=datetime.now()
+nd=cd-timedelta(days=5)
+print(nd.strftime("%Y-%m-%d"))
+
+
+
+
+
+yesterday=cd-timedelta(days=1)
+tomorrow=cd+timedelta(days=1)
+print("Yesterday:", yesterday.strftime("%Y-%m-%d"))
+print("Today:", cd.strftime("%Y-%m-%d"))
+print("Tomorrow:", tomorrow.strftime("%Y-%m-%d"))
+
+
+
+
+
+datetime_without_microseconds = cd.replace(microsecond=0)
+print("DateTime without Microseconds:", datetime_without_microseconds)
+
+
+
+
+
+
+
+
+time_difference=tomorrow-yesterday
+difference_in_seconds=time_difference.total_seconds()
+print("Difference in seconds:",difference_in_seconds)
