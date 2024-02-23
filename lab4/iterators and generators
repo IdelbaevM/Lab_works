@@ -1,0 +1,58 @@
+N=int(input())
+def sqr(N):
+    for i in range(N):
+        yield i**2
+squares_generator1=sqr(N)
+for square in squares_generator1:
+    print(square)
+
+
+print("--------------first")
+
+q=int(input())
+def even(q):
+    for i in range(0,q+1,2):
+        yield i
+geven=even(q)
+for num in geven:
+    print(num,end=",")
+print()
+print("--------------second")
+
+
+
+w=int(input())
+def sort(w):
+    for i in range(0, w + 1, 2):
+        if i % 3 == 0 and i % 4 == 0:
+            yield i
+res=sort(w)
+for num in res:
+    print(num,end=",")
+print()
+print("----------------third")
+
+
+
+a=int(input())
+b=int(input())
+def squares(a,b):
+    for i in range(a,b+1):
+        yield i**2
+result=squares(a,b)
+for num in result:
+    print(num,end=",")
+print()
+print("----------------fourth")
+
+
+
+y=int(input())
+def countdown(y):
+    while y>=0:
+        yield y
+        y-=1
+for num in countdown(y):
+    print(num,end=",")
+print()
+print("----------------fifth")
