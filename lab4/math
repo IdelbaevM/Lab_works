@@ -1,0 +1,43 @@
+import math
+deg=float(input())
+def convert(deg):
+    radian=math.radians(deg)
+    return radian
+radian=convert(deg)
+print(radian)
+print("---------------------------------")
+
+
+
+
+height=5
+floor=6
+roof=5
+def area(height,floor,roof):
+    s=float((floor+roof)/2*height)
+    return s
+ans=area(height,floor,roof)
+print(ans)
+print("------------------------------")
+
+
+
+sides=4
+length=25
+def ios(sides,length):
+    s=length*length
+    return s
+reSult=ios(sides,length)
+print(reSult)
+print("-----------------------------")
+
+
+
+
+base=float(5)
+Heigth=float(6)
+def p(base,Heigth):
+    s=base*Heigth
+    return s
+Result=p(base,Heigth)
+print(Result)
