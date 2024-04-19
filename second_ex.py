@@ -1,0 +1,61 @@
+import pygame
+
+pygame.init()
+screen = pygame.display.set_mode((400, 200))
+pygame.display.set_caption("Music keyboard")
+icon = pygame.image.load('images/music.png').convert_alpha()
+pygame.display.set_icon(icon)
+
+square = pygame.Surface((300, 50))
+square.fill('Gray')
+
+sounds = [
+    pygame.mixer.Sound('sounds/s_ef.mp3'),
+    pygame.mixer.Sound('sounds/classic.mp3')
+]
+
+play_img = pygame.image.load('images/play.png').convert_alpha()
+pause_img = pygame.image.load('images/pause.png').convert_alpha()
+
+current_state = 'play'
+current_sound_index = 0
+current_sound = None
+
+run = True
+while run:
+    screen.fill('White')
+    screen.blit(square, (60, 60))
+
+    if current_state == 'play':
+        screen.blit(play_img, (70, 70))
+    elif current_state == 'pause':
+        screen.blit(pause_img, (70, 70))
+
+    pygame.display.update()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+            pygame.quit()
+
+    key = pygame.key.get_pressed()
+    if key[pygame.K_SPACE]:
+        current_state = 'play'
+        if current_sound is None or not pygame.mixer.get_busy():
+            current_sound = sounds[current_sound_index]
+            current_sound.play()
+    elif key[pygame.K_RETURN]:
+        current_state = 'pause'
+        if current_sound is not None and pygame.mixer.get_busy():
+            current_sound.stop()
+            current_sound = None
+    elif key[pygame.K_RIGHT]:
+        current_sound_index = (current_sound_index + 1) % len(sounds)
+        if current_sound is not None and pygame.mixer.get_busy():
+            current_sound.stop()
+        current_sound = None
+    elif key[pygame.K_LEFT]:
+        current_sound_index = (current_sound_index - 1) % len(sounds)
+        if current_sound is not None and pygame.mixer.get_busy():
+            current_sound.stop()
+        current_sound = None
