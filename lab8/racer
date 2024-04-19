@@ -1,0 +1,65 @@
+import pygame
+import random
+
+pygame.init()
+screen = pygame.display.set_mode((840, 650))
+icon = pygame.image.load('images/icon.png').convert_alpha()
+pygame.display.set_icon(icon)
+
+bg = pygame.image.load('images/fon.png').convert_alpha()
+car = pygame.image.load('images/redcar.png').convert_alpha()
+coin = pygame.image.load('images/dollar.png').convert_alpha()
+coin_list = []
+
+car_x = 325
+car_speed = 12
+coin_speed = pygame.USEREVENT + 1
+pygame.time.set_timer(coin_speed, 1800)
+
+font = pygame.font.Font(None, 36)
+counter = 0
+
+clock = pygame.time.Clock()
+run = True
+while run:
+    screen.blit(bg, (0, 0))
+    screen.blit(car, (car_x, 450))
+
+    key = pygame.key.get_pressed()
+    if key[pygame.K_LEFT]:
+        car_x -= car_speed
+        if car_x < 79:
+            car_x = 79
+    elif key[pygame.K_RIGHT]:
+        car_x += car_speed
+        if car_x > screen.get_width() - car.get_width() - 75:
+            car_x = screen.get_width() - car.get_width() - 75
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        elif event.type == coin_speed:
+            coin_x = random.randint(80, 761)  # Adjusted range for coin_x
+            coin_y = -coin.get_height()
+            coin_list.append([coin_x, coin_y])
+
+    for coin_pos in coin_list:
+        coin_pos[1] += 5
+        screen.blit(coin, coin_pos)
+
+    coin_list = [coin_pos for coin_pos in coin_list if coin_pos[1] < screen.get_height()]
+
+    for coin_pos in coin_list:
+        coin_rect = pygame.Rect(coin_pos[0], coin_pos[1], coin.get_width(), coin.get_height())
+        car_rect = pygame.Rect(car_x, 450, car.get_width(), car.get_height())
+        if coin_rect.colliderect(car_rect):
+            coin_list.remove(coin_pos)
+            counter += 1
+
+    counter_text = font.render(f"Counter: {counter}", True, (255, 255, 255))
+    screen.blit(counter_text, (10, 10))
+
+    pygame.display.update()
+    clock.tick(25)
+
+pygame.quit()
